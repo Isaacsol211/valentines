@@ -1,12 +1,21 @@
 <script>
+  import { onMount } from 'svelte';
   import TeddyValentine from './TeddyValentine.svelte';
   import PinkValentine from './PinkValentine.svelte';
 
-  // Theme toggle - 'teddy' or 'pink' (pink is default)
+  // Load theme from localStorage, default to 'pink'
   let currentTheme = $state('pink');
+
+  onMount(() => {
+    const savedTheme = localStorage.getItem('valentine-theme');
+    if (savedTheme === 'teddy' || savedTheme === 'pink') {
+      currentTheme = savedTheme;
+    }
+  });
 
   function toggleTheme() {
     currentTheme = currentTheme === 'teddy' ? 'pink' : 'teddy';
+    localStorage.setItem('valentine-theme', currentTheme);
   }
 </script>
 

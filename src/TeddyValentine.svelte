@@ -31,9 +31,20 @@
     showBubble = true;
   }
 
-  function handleNameSubmit(e) {
+  async function handleNameSubmit(e) {
     e.preventDefault();
     if (userName.trim()) {
+      // Submit to database
+      try {
+        await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: userName, theme: 'teddy' })
+        });
+      } catch (error) {
+        console.error('Failed to submit:', error);
+      }
+      
       showNamePrompt = false;
     }
   }
